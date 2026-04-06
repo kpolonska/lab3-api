@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package vocabulary_app;
+
+// ENTETIES
+message Vocabulary {
+  string id = 1;
+  string name = 2;
+  string owner_id = 3;
+  int32 students_count = 4;
+  repeated Word word_list = 5;
+  string language_to = 6;
+  string language_from = 7;
+  }
+
+message Word {
+  string vocabulary_id = 1;  
+  string id = 5;
+  string word_from_language = 2;
+  string word_to_language = 3;
+  string description = 4;
+}
+
+
+// FILTERS
+message VocabularyFilters {
+  string owner_id = 1;
+  string language_to = 2;
+  string language_from = 3;
+  int32 limit = 4;
+  int32 offset = 5;
+}
+
+message WordFilters {
+  string vocabulary_id = 1;  
+  string word_from_language = 2;
+  string word_to_language = 3;
+  int32 limit = 4;
+  int32 offset = 5;
+}
+
+// requests
+
+message VocabularyRequest {
+  string id = 1;
+}
+
+message WordRequest {
+  string vocabulary_id = 1; 
+  string id = 2;
+}
+
+// responces for client streaming
+
+message WordsCreationResponse{
+  int32 word_number = 1;
+}
+
+message VocabulariesCreationResponse {
+  int32 vocabulary_number = 1;
+}
+
+//CONTROLLERS
+
+service VocabularyController {
+  // Create vocab.
+  rpc CreateOrUpdateVocabulary(Vocabulary) returns (Vocabulary) {}
+
+  // Create vocabularies with client side streaming
+  rpc CreateVocabularies(stream Vocabulary) returns (VocabulariesCreationResponse) {}
+
+  // filter vocabs.
+  rpc GetVocabularies(VocabularyFilters) returns (stream Vocabulary) {}
+
+  // get one vocabulary.
+  rpc GetVocabulary(VocabularyRequest) returns (Vocabulary) {}
+}
+
+service WordController {
+  // Create word inside one vocabulary.
+  rpc CreateOrUpdateWord(Word) returns (Word) {}
+
+  // Create words with client side streaming
+  rpc CreateWords(stream Word) returns (WordsCreationResponse) {}
+
+  // filter words inside one vocab.
+  rpc GetWords(WordFilters) returns (stream Word) {}
+
+  // get one word inside one vocabulary.
+  rpc GetWord(WordRequest) returns (Word) {}
+}
+
+
+
+
+
+

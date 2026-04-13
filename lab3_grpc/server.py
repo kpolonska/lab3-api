@@ -47,8 +47,8 @@ class VocabularyControllerService(vocabulary_pb2_grpc.VocabularyControllerServic
             else:
                 result = vocabulary.create_vocabulary(request)
         except Exception as error:
-            traceback.print_exc()  # prints full error to server terminal
-            context.abort(grpc.StatusCode.INTERNAL, str(error))
+            traceback.print_exc()
+            context.abort(grpc.StatusCode.INVALID_ARGUMENT, str(error))
         return vocabualary_mapper(result)
 
     def GetVocabularies(self, request, context):

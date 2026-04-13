@@ -1,5 +1,5 @@
 import uuid
-from lab3_graphQL.model.dto.vocabulary_dto import VocabularyDTO
+from model.dto.vocabulary_dto import VocabularyDTO
 
 class VocabularyService:
     

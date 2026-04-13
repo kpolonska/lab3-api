@@ -1,5 +1,5 @@
 import uuid
-from lab3_graphQL.model.dto.word_dto import WordDTO
+from model.dto.word_dto import WordDTO
 
 class WordService:
     
